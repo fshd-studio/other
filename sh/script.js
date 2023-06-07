@@ -80,3 +80,36 @@ document.getElementById("search-btn-github").onclick = function() {
 document.getElementById("search-btn-360").onclick = function() {
     search("https://www.so.com/s?ie=utf-8&q=" + encodeURIComponent(document.getElementById("search-box").value), true);
 };
+
+//控制台输出
+var styleTitle1 = `
+font-size: 20px;
+font-weight: 600;
+color: rgb(244,167,89);
+`
+var styleTitle2 = `
+font-size:150px;
+color: rgb(244,167,89);
+`
+var styleContent = `
+color: rgb(30,152,255);
+`
+  
+var styleinfo = `
+color: rgb(255, 102, 0);
+`
+  
+var title1 = 'PSSH'
+var title2 = `PSSH                                               
+`
+var content = `
+...?
+`
+  
+var info = `
+版 本 号：1.4
+更新日期：2023-06-01
+版权所有 © 2023 Phantom-Shadow. All Rights Reserved.
+`
+console.log(`%c${title1} %c${title2}
+%c${content} %c${info}`, styleTitle1, styleTitle2, styleContent, styleinfo)
