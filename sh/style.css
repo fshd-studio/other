@@ -2,24 +2,37 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2;
+    background-color: #302f2f;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #a2c9e488;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center; /* 文本水平居中 */
+    border-radius: 10px;
 }
 
 .tile {
-    width: 100px;
+    width: 100%;
     height: 100px;
     text-align: center;
     line-height: 80px;
     left: 50%;
+    /* 设置文字渐变 */
+background-clip: text;
+-webkit-background-clip: text; /* 兼容旧版浏览器 */
+color: transparent;
+background-image: linear-gradient(to right, #26343a, #9398da); /* 渐变方向和颜色 */
+
+/* 添加黑色阴影效果 */
+text-shadow: 2px 2px 0 #000000;
+
+/* 设置字体样式和粗细 */
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 字体类型 */
+font-weight: bold; /* 加粗字体 */
 }
 
 label {
@@ -27,10 +40,11 @@ label {
 }
 
 input[type="text"] {
+    background-color: #fff;
     width: 70%;
     padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 1px solid #615e5e;
     margin-right: 10px;
 }
 
@@ -39,7 +53,7 @@ button {
     border-radius: 4px;
     border: none;
     color: #fff;
-    background-color: #007bff;
+    background-color: #1f5288;
     cursor: pointer;
 }
 
