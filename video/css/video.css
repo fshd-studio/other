@@ -1,0 +1,13 @@
+.plyr {
+  margin: 0 auto;
+  max-width: 640px;
+  border-radius: 10px;
+}
+#autoplay-message {
+  display: none;
+  text-align: center;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 10px;
+}

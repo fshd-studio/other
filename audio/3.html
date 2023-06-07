@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>音频播放器</title>
+    <!--引入plyr播放器的css文件-->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <!--自定义样式-->
+    <style>
+        body {
+            font-family: '微软雅黑', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .audio-player-container {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .audio-player {
+            margin: 0 auto;
+            width: 90%;
+            max-width: 800px;
+            background-color: #f1f1f1;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .audio-item {
+            cursor: pointer;
+            margin: 10px 0;
+            padding: 4px 10px;
+            transition: all .3s ease;
+            border-radius: 3px;
+            width: 40%;
+            float: left;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .audio-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .audio-item.active {
+            background-color: #444;
+            color: #fff;
+        }
+
+        .playlist-container {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.2);
+            border-radius: 5px;
+            width: 30%;
+            float: left;
+            height: calc(100vh - 230px);
+            overflow-y: scroll;
+        }
+
+        .playlist-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .lyric-container {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.2);
+            border-radius: 5px;
+            width: 60%;
+            float: left;
+            overflow-y: scroll;
+            height: calc(100vh - 230px);
+        }
+
+        .lyric-line {
+            padding: 5px 10px;
+            transition: all .3s ease;
+        }
+
+        .lyric-line.current {
+            color: #f60;
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .plyr--audio .plyr__controls {
+            cursor: pointer;
+        }
+
+        .play-mode {
+            cursor: pointer;
+            font-size: 24px;
+            color: #444;
+        }
+
+        .play-mode:hover {
+            color: #f60;
+        }
+    </style>
+</head>
+<body>
+    <div class="playlist-container">
+        <div class="playlist-title">音频列表</div>
+        <div id="audio-list"></div>
+    </div>
+    <div class="lyric-container">
+        <div class="playlist-title">歌词</div>
+        <div id="lyric"></div>
+    </div>
+    <div class="audio-player-container">
+        <div class="audio-player">
+            <audio id="audio-player" controls></audio>
+            <span id="play-mode" title="切换播放模式">🔁</span>
+        </div>
+    </div>
+
+    <!--引入plyr播放器的js文件-->
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <!--自定义js代码-->
+    <script>
+        const audioPlayer = document.getElementById("audio-player");
+        const audioList = document.getElementById("audio-list");
+        const lyricContainer = document.getElementById("lyric");
+        let currentAudioIndex = 0;
+        let timer;
+
+        // 定义音频列表数组
+        const audioData = [
+            {
+                title: "你被骗了",
+                src: "https://fast-waller.github.io/resource/mp3/nggyura.mp3",
+                lyricSrc: "https://fast-waller.github.io/resource/lrc/nggyura.lrc"
+            },
+            {
+                title: "平凡之路",
+                src: "https://fast-waller.github.io/resource/mp3/pfzl.mp3",
+                lyricSrc: "https://fast-waller.github.io/resource/lrc/pfzl.lrc"
+            },
+            {
+                title: "歌曲三",
+                src: "audio/3.mp3",
+                lyricSrc: "lyric/3.lrc"
+            }
+        ];
+
+        // 根据音频数据生成音频列表
+        function generateAudioList() {
+            audioData.forEach((item, index) => {
+                const audioItem = document.createElement("div");
+                audioItem.classList.add("audio-item");
+                audioItem.innerText = item.title;
+                if (index === currentAudioIndex) {
+                    audioItem.classList.add("active");
+                }
+                audioItem.addEventListener("click", () => {
+                    // 切换音频源
+                    currentAudioIndex = index;
+                    switchAudio();
+                });
+                audioList.appendChild(audioItem);
+            });
+        }
+
+        // 渲染歌词
+        function renderLyric(lyric) {
+            lyricContainer.innerHTML = "";
+            clearInterval(timer);
+            const lines = lyric.split("\n");
+            const regex = /\[(\d{2}):(\d{2})\.(\d{2,3})\](.+)/;
+            lines.forEach(line => {
+                const matches = regex.exec(line);
+                if (matches) {
+                    const minutes = parseInt(matches[1]);
+                    const seconds = parseInt(matches[2]);
+                    const milliseconds = parseInt(matches[3]);
+                    const content = matches[4];
+                    const startTime = minutes * 60 + seconds + milliseconds / 1000;
+                    const lineEle = document.createElement("div");
+                    lineEle.classList.add("lyric-line");
+                    lineEle.dataset.time = startTime;
+                    lineEle.innerText = content;
+                    lyricContainer.appendChild(lineEle);
+                }
+            });
+            timer = setInterval(() => {
+                const currentTime = audioPlayer.currentTime;
+                const currentLine = Array.from(lyricContainer.children).find(line => {
+                    return line.dataset.time <= currentTime && line.nextElementSibling && line.nextElementSibling.dataset.time > currentTime;
+                });
+                if (currentLine) {
+                    Array.from(lyricContainer.children).forEach(line => {
+                        line.classList.remove("current");
+                    });
+                    currentLine.classList.add("current");
+                    lyricContainer.scrollTop = currentLine.offsetTop - lyricContainer.offsetHeight / 2;
+                }
+            }, 100);
+        }
+
+        // 切换音频
+        function switchAudio() {
+            // 切换音频源
+            audioPlayer.src = audioData[currentAudioIndex].src;
+            // 设置播放速率为1
+            audioPlayer.playbackRate = 1;
+            // 移除所有选中状态
+            document.querySelectorAll(".audio-item").forEach(audioItem => {
+                audioItem.classList.remove("active");
+            });
+            // 添加选中状态
+            document.querySelectorAll(".audio-item")[currentAudioIndex].classList.add("active");
+            // 更新音频标题
+            document.title = audioData[currentAudioIndex].title + " - 音频播放器";
+            // 渲染歌词
+            getLyric();
+        }
+
+        // 获取歌词
+        function getLyric() {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    renderLyric(xhr.responseText);
+                }
+            };
+            xhr.open("GET", audioData[currentAudioIndex].lyricSrc);
+            xhr.send();
+        }
+
+        // 切换播放模式
+        function switchPlayMode() {
+            const playModeIcon = document.getElementById("play-mode");
+            if (audioPlayer.loop) {
+                audioPlayer.loop = false;
+                playModeIcon.innerText = "🔁";
+            } else {
+                audioPlayer.loop = true;
+                playModeIcon.innerText = "🔂";
+            }
+        }
+
+        // 初始化
+        function init() {
+            generateAudioList();
+            switchAudio();
+            const player = new Plyr("#audio-player");
+            const playModeButton = document.getElementById("play-mode");
+            playModeButton.addEventListener("click", () => {
+                switchPlayMode();
+            });
+            audioPlayer.addEventListener("ended", () => {
+                currentAudioIndex = (currentAudioIndex + 1) % audioData.length;
+                switchAudio();
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

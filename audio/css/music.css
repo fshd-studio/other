@@ -1,0 +1,161 @@
+body {
+    font-family: '微软雅黑', sans-serif;
+    background-color: #fde67d;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    height: 30px; /* 缩小标题栏高度 */
+    padding: 10px;
+    overflow: hidden;
+  }
+  
+  .logo {
+    float: left;
+    margin-right: 20px;
+  }
+  
+  .logo h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  nav {
+    float: right;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out; /* 添加过渡效果 */
+  }
+  
+  nav a:hover {
+    color: #ffd700; /* 当鼠标悬停在链接上时更改颜色 */
+  }
+
+
+
+.audio-player-container {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.audio-player {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.plyr {
+    width: 95%;
+    border-radius: 10px;
+  }
+
+.audio-item {
+    margin-left: 5px;
+    cursor: pointer;
+    background-color: rgb(92, 240, 124);
+    margin: 10px 0;
+    padding: 4px 10px;
+    transition: all .3s ease;
+    border-radius: 3px;
+    width: 40%;
+    float: left;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 10px;
+}
+
+.audio-item:hover {
+    background-color: #f1f1f1;
+}
+
+.audio-item.active {
+    background-color: #444;
+    color: #fff;
+}
+
+.playlist-container {
+    margin-left: 50px;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    width: 30%;
+    float: left;
+    height: calc(100vh - 230px);
+    overflow-y: scroll;
+    border-radius: 10px;
+}
+
+.playlist-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.lyric-container {
+    margin-left: 10px;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    width: 60%;
+    float: left;
+    overflow-y: scroll;
+    height: calc(100vh - 230px);
+    border-radius: 10px;
+}
+
+.lyric-line {
+    padding: 5px 10px;
+    transition: all .3s ease;
+}
+
+.lyric-line.current {
+    color: #f60;
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.plyr--audio .plyr__controls {
+    cursor: pointer;
+}
+
+.play-mode {
+    cursor: pointer;
+    font-size: 24px;
+    color: #444;
+}
+
+.play-mode:hover {
+    color: #f60;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PSMSC</title>
+    <!--引入plyr播放器的css文件-->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <link rel="stylesheet" href="css/music.css" />
+    <style>
+      .wz {
+/* 设置文字渐变 */
+background-clip: text;
+-webkit-background-clip: text; /* 兼容旧版浏览器 */
+color: transparent;
+background-image: linear-gradient(to right, #14a9e4, #0a16bb); /* 渐变方向和颜色 */
+
+/* 添加黑色阴影效果 */
+text-shadow: 2px 2px 0 #ffffff;
+
+/* 设置字体样式和粗细 */
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 字体类型 */
+font-weight: bold; /* 加粗字体 */
+
+
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1 class="wz">PSMSC</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../contact/" target="_blank">联系我们&提出新歌要求</a></li>
+        <li>© 2023 Phantom-Shadow.<a href="https://plyr.io" target="_blank">使用plyr播放器</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="playlist-container">
+        <div class="playlist-title">音频列表(搜索功能暂时无法制作，可使用ctrl+f使用浏览器搜索搜索)</div>
+        <div id="audio-list"></div>
+    </div>
+    <div class="lyric-container">
+        <div class="playlist-title">歌词</div>
+        <div id="lyric"></div>
+    </div>
+    <div class="audio-player-container">
+        <div class="audio-player">
+            <audio id="audio-player" controls></audio>
+            <span id="play-mode" title="切换播放模式">🔁</span>
+        </div>
+    </div>
+
+    <!--引入plyr播放器的js文件-->
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <!--自定义js代码-->
+    <script src="js/music.js"></script>
+    </main>
+</body>
+</html>

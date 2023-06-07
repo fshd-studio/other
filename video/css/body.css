@@ -1,0 +1,36 @@
+/* 这里可以添加自定义 CSS 样式 */
+body {
+    background-color: aquamarine;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.ct {
+    background-color: rgb(166, 153, 235);
+    height: 70%;
+    width: 50%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    text-align:center;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px 4px rgb(0, 0, 0);
+    text-shadow: h-shadow v-shadow blur color;
+    font-size: 40px;
+}
+.plyr {
+    margin: 0 auto;
+    max-width: 640px;
+    border-radius: 10px;
+  }
+  #autoplay-message {
+    display: none;
+    text-align: center;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+  }

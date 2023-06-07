@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>音频播放器</title>
+    <!--引入plyr播放器的css文件-->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <!--自定义样式-->
+    <style>
+        body {
+            font-family: '微软雅黑', sans-serif;
+            background-color: #f1f1f1;
+        }
+
+        .player-container {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        .playlist-container {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.2);
+            border-radius: 5px;
+        }
+
+        .playlist-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .audio-item {
+            cursor: pointer;
+            margin: 10px 0;
+            padding: 4px 10px;
+            transition: all .3s ease;
+            border-radius: 3px;
+        }
+
+        .audio-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .audio-item.active {
+            background-color: #444;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <audio id="audio-player" controls></audio>
+        <div class="playlist-container">
+            <div class="playlist-title">音频列表</div>
+            <div id="audio-list"></div>
+        </div>
+    </div>
+
+    <!--引入plyr播放器的js文件-->
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <!--自定义js代码-->
+    <script>
+        const audioPlayer = document.getElementById("audio-player");
+        const audioList = document.getElementById("audio-list");
+        let currentAudioIndex = 0;
+
+        // 定义音频列表数组
+        const audioData = [
+            {
+                title: "歌曲一",
+                src: "https://fast-waller.github.io/resource/m4a/nbpl.m4a"
+            },
+            {
+                title: "歌曲二",
+                src: "https://fast-waller.github.io/resource/m4a/nbpl.m4a"
+            },
+            {
+                title: "歌曲三",
+                src: "audio/3.mp3"
+            }
+        ];
+
+        // 根据音频数据生成音频列表
+        function generateAudioList() {
+            audioData.forEach((item, index) => {
+                const audioItem = document.createElement("div");
+                audioItem.classList.add("audio-item");
+                audioItem.innerText = item.title;
+                if (index === currentAudioIndex) {
+                    audioItem.classList.add("active");
+                }
+                audioItem.addEventListener("click", () => {
+                    // 切换音频源
+                    audioPlayer.src = item.src;
+                    currentAudioIndex = index;
+                    // 设置播放速率为1
+                    audioPlayer.playbackRate = 1;
+                    // 移除所有选中状态
+                    document.querySelectorAll(".audio-item").forEach(audioItem => {
+                        audioItem.classList.remove("active");
+                    });
+                    // 添加选中状态
+                    audioItem.classList.add("active");
+                    // 更新音频标题
+                    document.title = item.title + " - 音频播放器";
+                });
+                audioList.appendChild(audioItem);
+            });
+        }
+
+        // 初始化
+        function init() {
+            generateAudioList();
+            const player = new Plyr("#audio-player");
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
