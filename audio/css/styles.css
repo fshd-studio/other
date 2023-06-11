@@ -1,41 +1,120 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-color: #f0f0f0;
   font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #888585;
 }
-.plyr {
-  border-radius: 10px;
+
+.container {
+  background-color:#c3f3ff;
+  border: 2px solid gray;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+header {
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  height: 50px;
+}
+
+.logo {
+  float: left;
+  margin-right: 20px;
+  text-align: center;
+  white-space: nowrap;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-/* 自定义 Plyr 控件样式 */
-.plyr__controls {
-  background-color: #333;
-  padding: 10px;
+  text-overflow: ellipsis;
 }
 
-.plyr__progress--played, .plyr__volume--display {
-  color: #ff3a3a;
+.logo h1 {
+  font-size: 24px;
+  margin: 0;
 }
 
-/* 自定义 Plyr 错误提示信息样式 */
-.plyr__poster {
+header h1 {
+  font-size: 28px;
+}
+
+header nav {
+  margin-top: 10px;
+}
+
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+main {
+  padding: 20px 0;
+}
+
+section {
+  margin-bottom: 50px;
+  border-bottom: 1px solid #924343;
+  color: #222;
+}
+
+section:last-child {
+  border-bottom: none;
+}
+
+h2.accordion-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+h2.accordion-title::before {
+  content: '\25BC';
+  display: inline-block;
+  margin-right: 10px;
+}
+
+h2.is-open.accordion-title::before {
+  transform: rotate(180deg);
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+.accordion-content {
+  padding-left: 10px;
+  padding-right: 10px;
   display: none;
+  overflow: hidden;
+  padding-bottom: 20px;
 }
-.plyr__tab-focus:not(:focus-visible) {
-  outline: none !important;
+
+footer {
+  background-color: #eee;
+  padding: 20px;
+  text-align: center;
+  height: 50px;
 }
-.plyr__tooltip {
-  display: none;
-}
-.plyr__error {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  font-size: 20px;
-  color: red;
+
+.footer-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 0;
 }
