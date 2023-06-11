@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>PSMSC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--引入plyr播放器的css文件-->
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
     <link rel="stylesheet" href="css/music.css" />
@@ -40,10 +41,11 @@ font-weight: bold; /* 加粗字体 */
     <div class="playlist-container">
         <div class="playlist-title">音频列表(搜索功能暂时无法制作，可使用ctrl+f使用浏览器搜索搜索)</div>
         <div id="audio-list"></div>
+        <div class="playlist-footer"><a href="policy.html">必读政策</a></div>
     </div>
     <div class="lyric-container">
-        <div class="playlist-title">歌词</div>
-        <div id="lyric"></div>
+        <div class="lrcist-title">歌词</div>
+        <div id="lyric">PSMSC-听我想听的~</div>
     </div>
     <div class="audio-player-container">
         <div class="audio-player">
@@ -52,6 +54,69 @@ font-weight: bold; /* 加粗字体 */
         </div>
     </div>
 
+    <script>
+const isDevtoolEnabled = false; // 设置该值为 true 或 false 来开启或关闭该功能
+
+// 判断是否打开了开发者工具
+function isDevtoolOpened() {
+  let startTime = new Date().getTime();
+  console.time("isDevtoolOpened"); 
+  debugger;
+  console.timeEnd("isDevtoolOpened");
+  return new Date().getTime() - startTime > 100;
+}
+
+// 如果开发者工具已打开，则直接刷新网页
+if (isDevtoolEnabled && isDevtoolOpened()) {
+  location.reload();
+} 
+    </script> 
+       <script>
+// 获取当前网页的标题作为 oldTitle，并将其保存到 cookie 中
+let oldTitle = document.title;
+document.cookie = "oldTitle=" + oldTitle + ";path=/";
+
+// 监听 visibilitychange 事件
+document.addEventListener("visibilitychange", () => {
+if (document.hidden) {
+// 如果页面不可见，先记录当前 title 到 cookie 中
+let newTitle = oldTitle + "等着你哦~";
+document.cookie = "newTitle=" + document.title + ";path=/";
+// 再将 title 设为默认值
+document.title = newTitle;
+} else {
+// 页面可见，从 cookie 中获取之前记录的 title
+let newTitle = getCookie("newTitle");
+if (newTitle !== "") {
+// 如果 cookie 中存在之前记录的 title，则将其设为新的 title
+document.title = newTitle;
+deleteCookie("newTitle");
+} else {
+// 如果 cookie 中没有记录之前的 title，则在控制台输出错误信息，并将错误信息显示在 title 中
+console.error("无法从cookie中获取之前记录的title，或者无法保存title到cookie中");
+document.title = "Cookie设置时出现问题 - FSHD";
+}
+}
+});
+
+// 获取指定名称的 cookie 值
+function getCookie(name) {
+let cookieArr = document.cookie.split("; ");
+for (let i = 0; i < cookieArr.length; i++) {
+let cookiePair = cookieArr[i].split("=");
+if (cookiePair[0] === name) {
+return decodeURIComponent(cookiePair[1]);
+}
+}
+return "";
+}
+
+// 删除指定名称的 cookie
+function deleteCookie(name) {
+document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+}
+
+    </script>
     <!--引入plyr播放器的js文件-->
     <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
     <!--自定义js代码-->

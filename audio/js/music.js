@@ -7,25 +7,37 @@ let timer;
 const player = new Plyr("#my-audio", {
   autoplay: true,
 });
-
+/*
 // 定义音频列表数组
 const audioData = [
     {
         title: "你被骗了",
-        src: "https://fast-waller.github.io/resource/mp3/nggyura.mp3",
-        lyricSrc: "https://fast-waller.github.io/resource/lrc/nggyura.lrc"
+        src: "music/nggyura.mp3",
+        lyricSrc: "music/nggyura.lrc"
     },
     {
         title: "平凡之路",
-        src: "https://fast-waller.github.io/resource/mp3/pfzl.mp3",
-        lyricSrc: "https://fast-waller.github.io/resource/lrc/pfzl.lrc"
+        src: "music/pfzl.mp3",
+        lyricSrc: "music/pfzl.lrc"
     },
     {
         title: "普通爱情故事",
-        src: "https://fast-waller.github.io/resource/mp3/ptaqgs.mp3",
-        lyricSrc: "https://fast-waller.github.io/resource/lrc/ptaqgs.lrc"
+        src: "music/ptaqgs.mp3",
+        lyricSrc: "music/ptaqgs.lrc"
     }
 ];
+*/
+
+let audioData = []; // 定义空数组用于存储 JSON 数据
+
+// 使用 fetch() 方法获取 JSON 数据并将其转换为 JavaScript 数组
+fetch("audioData.json")
+  .then(response => response.json())
+  .then(data => {
+    audioData = data; // 将获取到的 JSON 数据赋值给数组变量
+  })
+  .catch(error => console.error(error));
+
 
 // 根据音频数据生成音频列表
 function generateAudioList() {
@@ -95,6 +107,10 @@ function switchAudio() {
     document.querySelectorAll(".audio-item")[currentAudioIndex].classList.add("active");
     // 更新音频标题
     document.title = audioData[currentAudioIndex].title + " - PSMSC";
+    //更新歌词标题，显示歌曲名
+    document.querySelector('.lrcist-title').innerHTML = audioData[currentAudioIndex].title + "的歌词";
+    //更新歌词标题，显示歌曲名
+    document.querySelector('.wz').innerHTML = "PSMSC-" + audioData[currentAudioIndex].title  ;
     // 渲染歌词
     getLyric();
 }
